@@ -27,7 +27,7 @@ def get_thrust(time, rocketParameters):
 
 #Calculates drag
 def get_drag(velocity, altitude, drag_coefficient, drag_area):
-    airDensity = get_air_density2(altitude)
+    airDensity = get_air_density(altitude)
     drag = 0.5 * airDensity * velocity**2 * drag_coefficient * drag_area
     return math.copysign(drag, velocity)
 
@@ -64,19 +64,5 @@ def rk4(rocketState, t, dt, rocketParameters):
 
     return newState
 
-#a test loop to run the code
 
-#simulation time, increases by 1/frequency per tick
-time = 0
-
-state_history = []
-
-
-
-while time<1 or rocketState[2]>0:
-    state_history.append(rocketState.copy())
-    print(rocketState)
-    rocketState = rk4(rocketState, time, (1/frequency), stage1)
-
-    time+=(1/frequency)
 

@@ -28,7 +28,7 @@ def get_atmospheric_pressure(h):
         print("Temperature calculation error")
 
 #Also from the Glenn Research Centre
-def get_air_density2(h):
+def get_air_density(h):
     p = get_atmospheric_pressure(h)
     T = get_atmospheric_temperature(h)
     density = p / (0.2869 * (T+273.1))
