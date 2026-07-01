@@ -1,4 +1,3 @@
-
 import math
 
 #Modeled using the ISA Standard Atmosphere 1976

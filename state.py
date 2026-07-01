@@ -1,25 +1,36 @@
 import numpy as np
 import math
+from dataclasses import dataclass
+from thrustdata import thrustDataTimeStamp, thrustDataThrustValue, ISP
 
-#mass value of stage
-mass1 = 50
+
+#Drag Area numbers
+radius = 0.25
+dragArea = math.pi * radius**2
+
+
+
+@dataclass
+class rocketParameters:
+    drag_coefficient : float
+    drag_area: float
+    thrust_time_stamps: list
+    thrust_values: list
+    isp: float
+    dry_mass: float
+
+stage1 = rocketParameters(
+    drag_coefficient=0.75,
+    drag_area=dragArea,
+    thrust_time_stamps=thrustDataTimeStamp,
+    thrust_values=thrustDataThrustValue,
+    isp=ISP,
+    dry_mass=50
+)
 
 #x, y, z,
 #vx, vy, vz,
 #mass
 rocketState = np.array([0.0, 0.0, 0.0,
                0.0, 0.0, 0.0,
-               mass1])
-
-#simulation time, increases by 1/frequency per tick
-time = 0
-
-#Drag numbers
-dragCoefficient = 0.75
-radius = 0.25
-dragArea = math.pi * radius**2
-
-#Gravity for simulation, currently held as constant
-def get_gravity(h):
-    gravity = (6.67*10**-11)*(5.9722*10**24)/((6371000+h)**2)
-    return gravity
+               stage1.dry_mass])
