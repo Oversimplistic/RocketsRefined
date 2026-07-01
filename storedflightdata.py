@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 @dataclass
 class FlightDataSummary:
@@ -14,3 +14,19 @@ class FlightDataSummary:
     burnout_time: float=None
     burnout_altitude: float=None
 
+
+@dataclass
+class FlightLog:
+    time:list=field(default_factory=list)
+    x: list = field(default_factory=list)
+    y: list = field(default_factory=list)
+    z: list = field(default_factory=list)
+    vx: list = field(default_factory=list)
+    vy: list = field(default_factory=list)
+    vz: list = field(default_factory=list)
+    mass: list = field(default_factory=list)
+
+    def log(self, t, state):
+        x,y,z,vx,vy,vz,m = state
+        self.time.append(t)
+        self.x.append(x); self.y.append(y); self.z.append(z); self.vx.append(vx); self.vy.append(vy); self.vz.append(vz);self.mass.append(m)

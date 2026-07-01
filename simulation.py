@@ -1,14 +1,14 @@
 from physics import *
-from storedflightdata import FlightDataSummary
+from storedflightdata import FlightDataSummary, FlightLog
 
 #a test loop to run the code
 
 #simulation time, increases by 1/frequency per tick
 time = 0
 
-state_history = []
 
 summary = FlightDataSummary()
+flight_log = FlightLog()
 
 while time<1 or rocketState[2]>0:
 
@@ -35,12 +35,12 @@ while time<1 or rocketState[2]>0:
         summary.burnout_altitude = z
 
 
-    state_history.append(rocketState.copy())
+    flight_log.log(time, rocketState)
     print(rocketState)
     rocketState = rk4(rocketState, time, (1/frequency), stage1)
 
     time+=(1/frequency)
 
 #print(state_history)
-
+print(flight_log.z)
 print(summary)
