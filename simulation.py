@@ -48,5 +48,8 @@ output_as_text(summary)
 
 #Calls the graphing function in infodisplay for 2d graphing.
 xy_graph( flight_log.time,flight_log.vz,"Time", "Vertical Velocity","Vertical Velocity vs Time",
-          flight_log.time,flight_log.z,"Time", "Altitude","Altitude vs Time")
+          flight_log.time,flight_log.z,"Time", "Altitude","Altitude vs Time",
+          flight_log.time,flight_log.mass,"Time", "Mass", "Mass vs Time",
+          )
+
 

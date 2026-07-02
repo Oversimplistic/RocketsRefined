@@ -10,22 +10,31 @@ def output_as_text(summary):
           )
 
 
-#An explicit matplotlib configuration for 2x1 graphing, this can be adjusted to any aspect ratio by adding new graphs
+#An explicit matplotlib configuration for 3x1 graphing, this can be adjusted to any aspect ratio by adding new graphs
 def xy_graph(xlist1, ylist1, xtitle1, ytitle1, graphtitle1,
-             xlist2, ylist2, xtitle2, ytitle2, graphtitle2):
+             xlist2, ylist2, xtitle2, ytitle2, graphtitle2,
+             xlist3, ylist3, xtitle3, ytitle3, graphtitle3):
 
     #establishes subplots
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(1, 3)
 
     #graph 1 parameters
     axs[0].plot(xlist1, ylist1)
     axs[0].set_xlabel(xtitle1)
     axs[0].set_ylabel(ytitle1)
+    axs[0].set_title(graphtitle1)
 
     #graph 2 parameters
     axs[1].plot(xlist2, ylist2)
     axs[1].set_xlabel(xtitle2)
     axs[1].set_ylabel(ytitle2)
+    axs[1].set_title(graphtitle2)
+
+    #graph 3 parameters
+    axs[2].plot(xlist3, ylist3)
+    axs[2].set_xlabel(xtitle3)
+    axs[2].set_ylabel(ytitle3)
+    axs[2].set_title(graphtitle3)
 
     #render graph
     plt.show()
