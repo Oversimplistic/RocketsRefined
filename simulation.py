@@ -37,7 +37,7 @@ while time<1 or rocketState[2]>0:
 
 
     flight_log.log(time, rocketState)
-    print(rocketState)
+    #print(rocketState)
     rocketState = rk4(rocketState, time, (1/frequency), stage1)
 
     time+=(1/frequency)
@@ -45,5 +45,8 @@ while time<1 or rocketState[2]>0:
 #print(state_history)
 
 output_as_text(summary)
-xy_graph( flight_log.time,flight_log.vz,"Time", "Vertical Velocity","Vertical Velocity vs Time")
+
+#Calls the graphing function in infodisplay for 2d graphing.
+xy_graph( flight_log.time,flight_log.vz,"Time", "Vertical Velocity","Vertical Velocity vs Time",
+          flight_log.time,flight_log.z,"Time", "Altitude","Altitude vs Time")
 

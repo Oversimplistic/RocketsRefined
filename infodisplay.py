@@ -10,10 +10,22 @@ def output_as_text(summary):
           )
 
 
-def xy_graph(xlist, ylist, xtitle, ytitle, graphtitle):
-    plt.plot(xlist, ylist)
-    plt.xlabel(xtitle)
-    plt.ylabel(ytitle)
-    plt.title(graphtitle)
-    plt.show()
+#An explicit matplotlib configuration for 2x1 graphing, this can be adjusted to any aspect ratio by adding new graphs
+def xy_graph(xlist1, ylist1, xtitle1, ytitle1, graphtitle1,
+             xlist2, ylist2, xtitle2, ytitle2, graphtitle2):
 
+    #establishes subplots
+    fig, axs = plt.subplots(1, 2)
+
+    #graph 1 parameters
+    axs[0].plot(xlist1, ylist1)
+    axs[0].set_xlabel(xtitle1)
+    axs[0].set_ylabel(ytitle1)
+
+    #graph 2 parameters
+    axs[1].plot(xlist2, ylist2)
+    axs[1].set_xlabel(xtitle2)
+    axs[1].set_ylabel(ytitle2)
+
+    #render graph
+    plt.show()
