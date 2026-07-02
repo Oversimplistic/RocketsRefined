@@ -1,6 +1,6 @@
 from infodisplay import output_as_text, xy_graph
 from physics import *
-from storedflightdata import FlightDataSummary, FlightLog
+from storedflightdata import FlightDataSummary, FlightLog, simulationData
 
 #a test loop to run the code
 
@@ -10,6 +10,7 @@ time = 0
 
 summary = FlightDataSummary()
 flight_log = FlightLog()
+
 
 while time<1 or rocketState[2]>0:
 
@@ -47,9 +48,10 @@ while time<1 or rocketState[2]>0:
 output_as_text(summary)
 
 #Calls the graphing function in infodisplay for 2d graphing.
-xy_graph( flight_log.time,flight_log.vz,"Time", "Vertical Velocity","Vertical Velocity vs Time",
-          flight_log.time,flight_log.z,"Time", "Altitude","Altitude vs Time",
-          flight_log.time,flight_log.mass,"Time", "Mass", "Mass vs Time",
+xy_graph( simulation_data.time,simulation_data.velocity,"Time (s)", "Velocity (m/s)","Velocity vs Time",
+          flight_log.time,flight_log.z,"Time (s)", "Altitude (m)","Altitude vs Time",
+          simulation_data.time,simulation_data.thrust,"Time (s)", "Thrust (N)", "Thrust vs Time",
+          simulation_data.time, simulation_data.drag, "Time (s)", "Drag (N)", "Drag vs Time"
           )
 
 

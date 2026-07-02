@@ -33,11 +33,12 @@ class FlightLog:
 
 @dataclass
 class simulationData:
+    time:list=field(default_factory=list)
     drag:list=field(default_factory=list)
     altitude:list=field(default_factory=list)
     velocity:list=field(default_factory=list)
     thrust:list=field(default_factory=list)
     gravity:list=field(default_factory=list)
 
-    def log(self, drag, altitude, velocity, thrust, gravity):
-        self.drag.append(drag); self.altitude.append(altitude); self.velocity.append(velocity); self.thrust.append(thrust); self.gravity.append(gravity)
+    def log(self, time, drag, altitude, velocity, thrust, gravity):
+        self.time.append(time); self.drag.append(drag); self.altitude.append(altitude); self.velocity.append(velocity); self.thrust.append(thrust); self.gravity.append(gravity)

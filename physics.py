@@ -56,7 +56,7 @@ def derivatives(t, state, rocketParameters, knum):
     else: dm = 0
 
     if knum == 1:
-        simulation_data.log(drag, z, vxyz, thrust, gravity)
+        simulation_data.log(t, drag, z, vxyz, thrust, gravity)
     else:
         knum = knum + 1
 
