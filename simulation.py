@@ -1,6 +1,6 @@
 from infodisplay import output_as_text, xy_graph
 from physics import *
-from storedflightdata import FlightDataSummary, FlightLog, simulationData
+from storedflightdata import FlightDataSummary, FlightLog, simulationDataLog
 
 #a test loop to run the code
 

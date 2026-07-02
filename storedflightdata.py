@@ -32,7 +32,7 @@ class FlightLog:
         self.x.append(x); self.y.append(y); self.z.append(z); self.vx.append(vx); self.vy.append(vy); self.vz.append(vz);self.mass.append(m)
 
 @dataclass
-class simulationData:
+class simulationDataLog:
     time:list=field(default_factory=list)
     drag:list=field(default_factory=list)
     altitude:list=field(default_factory=list)
