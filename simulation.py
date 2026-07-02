@@ -1,3 +1,4 @@
+from infodisplay import output_as_text
 from physics import *
 from storedflightdata import FlightDataSummary, FlightLog
 
@@ -42,5 +43,5 @@ while time<1 or rocketState[2]>0:
     time+=(1/frequency)
 
 #print(state_history)
-print(flight_log.z)
-print(summary)
+
+output_as_text(summary)
