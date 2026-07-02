@@ -45,5 +45,5 @@ while time<1 or rocketState[2]>0:
 #print(state_history)
 
 output_as_text(summary)
-xy_graph(flight_log.vz, flight_log.time, "Vertical Velocity", "Time", "Vertical Velocity vs Time")
+xy_graph( flight_log.time,flight_log.vz,"Time", "Vertical Velocity","Vertical Velocity vs Time")
 

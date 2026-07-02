@@ -11,9 +11,9 @@ def output_as_text(summary):
 
 
 def xy_graph(xlist, ylist, xtitle, ytitle, graphtitle):
-    plt.plot(ylist, xlist)
-    plt.xlabel(ytitle)
-    plt.ylabel(xtitle)
+    plt.plot(xlist, ylist)
+    plt.xlabel(xtitle)
+    plt.ylabel(ytitle)
     plt.title(graphtitle)
     plt.show()
 
