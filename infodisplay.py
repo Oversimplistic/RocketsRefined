@@ -1,6 +1,5 @@
 #A place to put functions for displaying data (text, graphs, graphics, etc.)
-
-from storedflightdata import *
+import matplotlib.pyplot as plt
 
 
 def output_as_text(summary):
@@ -10,4 +9,11 @@ def output_as_text(summary):
           f"Stage 1 burnout was reached at {summary.burnout_time:.2f} at {summary.burnout_altitude:.2f} meters"
           )
 
+
+def xy_graph(xlist, ylist, xtitle, ytitle, graphtitle):
+    plt.plot(ylist, xlist)
+    plt.xlabel(ytitle)
+    plt.ylabel(xtitle)
+    plt.title(graphtitle)
+    plt.show()
 

@@ -1,4 +1,4 @@
-from infodisplay import output_as_text
+from infodisplay import output_as_text, xy_graph
 from physics import *
 from storedflightdata import FlightDataSummary, FlightLog
 
@@ -45,3 +45,5 @@ while time<1 or rocketState[2]>0:
 #print(state_history)
 
 output_as_text(summary)
+xy_graph(flight_log.vz, flight_log.time, "Vertical Velocity", "Time", "Vertical Velocity vs Time")
+
