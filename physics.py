@@ -1,6 +1,9 @@
 from state import *
 from simulationconditions import frequency, standardGravity
 from atmosphere import *
+from storedflightdata import simulationData
+
+simulation_data = simulationData()
 
 #Gravity for simulation
 def get_gravity(h):
@@ -31,8 +34,10 @@ def get_drag(velocity, altitude, drag_coefficient, drag_area):
     drag = 0.5 * airDensity * velocity**2 * drag_coefficient * drag_area
     return math.copysign(drag, velocity)
 
-def derivatives(t, state, rocketParameters):
+def derivatives(t, state, rocketParameters, knum):
     x,y,z,vx,vy,vz,m = state
+
+    vxyz = math.sqrt(vx**2 + vy**2 + vz**2)
 
     #Temporarily just has thrust on z angle
     thrust = get_thrust(t, rocketParameters)
@@ -50,15 +55,22 @@ def derivatives(t, state, rocketParameters):
     if thrust>1: dm = -thrust/(rocketParameters.isp * standardGravity)
     else: dm = 0
 
+    if knum == 1:
+        simulation_data.log(drag, z, vxyz, thrust, gravity)
+    else:
+        knum = knum + 1
+
     return np.array([dx, dy, dz, dvx, dvy, dvz, dm])
 
 def rk4(rocketState, t, dt, rocketParameters):
     state = rocketState
 
-    k1 = derivatives(t, state, rocketParameters)
-    k2 = derivatives(t + dt/2, state + dt*k1, rocketParameters)
-    k3 = derivatives(t + dt/2, state + dt*k2, rocketParameters)
-    k4 = derivatives(t + dt, state + dt*k3, rocketParameters)
+    knum = 1
+
+    k1 = derivatives(t, state, rocketParameters, knum)
+    k2 = derivatives(t + dt/2, state + dt*k1, rocketParameters, knum)
+    k3 = derivatives(t + dt/2, state + dt*k2, rocketParameters, knum)
+    k4 = derivatives(t + dt, state + dt*k3, rocketParameters, knum)
 
     newState = state + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
 
