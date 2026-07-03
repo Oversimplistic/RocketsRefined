@@ -12,15 +12,16 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 
 - RK4 Integration of motion equations
 - Motor-thrust curve interpolation of real-world data
+- Prescribed gravity turn and downrange modelling/tracking
 - Mass-flow modelling from thrust and specific impulse (Isp)
 - ISA-based atmospheric density model (drag varies with altitude)
 - Altitude-dependent gravity
 - Flight event tracking (max altitude, max velocity, max dynamic pressure, burnout)
-- Automatic plotting of data (altitude, velocity, thrust, and drag)
+- Automatic plotting of data (altitude, downrange motion, velocity, thrust, and drag)
 
 ## Current Limitations
 
-- Only a one dimensional ascent profile - no down-range or lateral motion yet
+- Only a two-dimensional ascent profile - no lateral motion yet
 - Single stage only
 - No wind or dispersion modelling
 - Not yet validated against real flight data
@@ -40,8 +41,10 @@ This runs the simulation until the rocket returns to the ground, prints a flight
 
 ## Roadmap
 
-- [ ] Extend to 2D (downrange distance + altitude)
-- [ ] Add gravity turn logic
+- [x] Add 2D capability (downrange distance)
+- [x] Add a prescribed gravity turn for proof of concept
+- [ ] Extend to 3D (lateral tracking)
+- [ ] Add aerodynamic-driven gravity turn logic
 - [ ] Multi-stage support
 - [ ] Monte Carlo dispersion analysis (wind, thrust variance)
 - [ ] Validation against real flight telemetry

@@ -20,7 +20,7 @@ class rocketParameters:
     dry_mass: float
 
 stage1 = rocketParameters(
-    drag_coefficient=0.75,
+    drag_coefficient=0.25,
     drag_area=dragArea,
     thrust_time_stamps=thrustDataTimeStamp,
     thrust_values=thrustDataThrustValue,
