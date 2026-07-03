@@ -1,6 +1,7 @@
 from infodisplay import output_as_text, xy_graph
 from physics import *
 from storedflightdata import FlightDataSummary, FlightLog, simulationDataLog
+from state import rocketState
 
 #a test loop to run the code
 
@@ -36,8 +37,8 @@ while time<1 or rocketState[2]>0:
         summary.burnout_time = time
         summary.burnout_altitude = z
 
-
-    flight_log.log(time, rocketState)
+    theta = get_trajectory(time, vx, vy, vz)
+    flight_log.log(time, rocketState, theta)
     #print(rocketState)
     rocketState = rk4(rocketState, time, (1/frequency), stage1)
 
@@ -50,7 +51,7 @@ output_as_text(summary)
 #Calls the graphing function in infodisplay for 2d graphing.
 xy_graph( simulation_data.time,simulation_data.velocity,"Time (s)", "Velocity (m/s)","Velocity vs Time",
           flight_log.time,flight_log.z,"Time (s)", "Altitude (m)","Altitude vs Time",
-          simulation_data.time,simulation_data.thrust,"Time (s)", "Thrust (N)", "Thrust vs Time",
+          flight_log.x,flight_log.z,"X (m)", "Z (m)", "X vs Z",
           simulation_data.time, simulation_data.drag, "Time (s)", "Drag (N)", "Drag vs Time"
           )
 

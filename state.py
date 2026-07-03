@@ -30,7 +30,7 @@ stage1 = rocketParameters(
 
 #x, y, z,
 #vx, vy, vz,
-#mass
+#mass, theta
 rocketState = np.array([0.0, 0.0, 0.0,
                0.0, 0.0, 0.0,
                stage1.dry_mass])

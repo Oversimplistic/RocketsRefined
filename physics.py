@@ -2,6 +2,7 @@ from state import *
 from simulationconditions import frequency, standardGravity
 from atmosphere import *
 from storedflightdata import simulationDataLog
+from trajectoryprofile import get_trajectory
 
 simulation_data = simulationDataLog()
 
@@ -32,7 +33,7 @@ def get_thrust(time, rocketParameters):
 def get_drag(velocity, altitude, drag_coefficient, drag_area):
     airDensity = get_air_density(altitude)
     drag = 0.5 * airDensity * velocity**2 * drag_coefficient * drag_area
-    return math.copysign(drag, velocity)
+    return drag
 
 def derivatives(t, state, rocketParameters):
 
@@ -42,10 +43,23 @@ def derivatives(t, state, rocketParameters):
     vxyz = math.sqrt(vx ** 2 + vy ** 2 + vz ** 2)
     thrust = get_thrust(t, rocketParameters)
     gravity = get_gravity(z)
-    drag = get_drag(vz, z, rocketParameters.drag_coefficient, rocketParameters.drag_area)
+    drag = get_drag(vxyz, z, rocketParameters.drag_coefficient, rocketParameters.drag_area)
     simulation_data.log(t, drag, z, vxyz, thrust, gravity)
 
-    Fx, Fy, Fz = 0, 0, thrust - drag - gravity * m
+    theta = get_trajectory(t, vx, vy, vz)
+
+    #Resolve thrust into components
+    thrustX = thrust * math.sin(theta)
+    thrustZ = thrust * math.cos(theta)
+
+    #Resolve drag into components
+    if vxyz >0:
+        Fx_drag = -drag * (vx / vxyz)
+        Fz_drag = -drag * (vz / vxyz)
+    else:
+        Fx_drag, Fz_drag = 0, 0
+
+    Fx, Fy, Fz = thrustX+Fx_drag, 0, thrustZ + Fz_drag - gravity * m
 
     ax, ay, az = Fx/m, Fy/m, Fz/m
     dx, dy, dz = vx, vy, vz
@@ -77,6 +91,8 @@ def rk4(rocketState, t, dt, rocketParameters):
     newState = state + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
 
     return newState
+
+
 
 
 
