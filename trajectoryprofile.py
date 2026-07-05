@@ -13,7 +13,7 @@ class trajectory:
 profile = trajectory(
     pitchOverTime = 1.5,
     pitchOverDurationTime = 1,
-    pitchOverAngle = 0.04
+    pitchOverAngle = 0.02
 )
 
 

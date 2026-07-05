@@ -12,7 +12,8 @@ def get_gravity(h):
     return gravity
 
 #A function to get thrust via interpolation, this can be improved by a more efficient search, e.g. a modified binary search
-def get_thrust(time, rocketParameters):
+def get_thrust(time, rocketParameters, stage_ignition_time):
+    time = time - stage_ignition_time
     times = rocketParameters.thrust_time_stamps
     values = rocketParameters.thrust_values
 
@@ -35,13 +36,13 @@ def get_drag(velocity, altitude, drag_coefficient, drag_area):
     drag = 0.5 * airDensity * velocity**2 * drag_coefficient * drag_area
     return drag
 
-def derivatives(t, state, rocketParameters):
+def derivatives(t, state, rocketParameters, stage_ignition_time):
 
 
     x, y, z, vx, vy, vz, m = state
 
     vxyz = math.sqrt(vx ** 2 + vy ** 2 + vz ** 2)
-    thrust = get_thrust(t, rocketParameters)
+    thrust = get_thrust(t, rocketParameters, stage_ignition_time)
     gravity = get_gravity(z)
     drag = get_drag(vxyz, z, rocketParameters.drag_coefficient, rocketParameters.drag_area)
     simulation_data.log(t, drag, z, vxyz, thrust, gravity)
@@ -67,26 +68,18 @@ def derivatives(t, state, rocketParameters):
 
     #Mass decrease is proportional to thrust and ISP.
     #Cut off of 10N thrust is largely arbitrary but sufficient for our purposes as 10N
-    if thrust>1: dm = -thrust/(rocketParameters.isp * standardGravity)
+    if thrust>1 and m>rocketParameters.dry_mass: dm = -thrust/(rocketParameters.isp * standardGravity)
     else: dm = 0
 
     return np.array([dx, dy, dz, dvx, dvy, dvz, dm])
 
-def rk4(rocketState, t, dt, rocketParameters):
+def rk4(rocketState, t, dt, rocketParameters, stage_ignition_time):
     state = rocketState
 
-    k1 = derivatives(t, state, rocketParameters)
-    k2 = derivatives(t + dt/2, state + dt*k1, rocketParameters)
-    k3 = derivatives(t + dt/2, state + dt*k2, rocketParameters)
-    k4 = derivatives(t + dt, state + dt*k3, rocketParameters)
-
-    x, y, z, vx, vy, vz, m = state
-    vxyz = math.sqrt(vx ** 2 + vy ** 2 + vz ** 2)
-    # Temporarily just has thrust on z angle
-    thrust = get_thrust(t, rocketParameters)
-    gravity = get_gravity(z)
-    drag = get_drag(vz, z, rocketParameters.drag_coefficient, rocketParameters.drag_area)
-    simulation_data.log(t, drag, z, vxyz, thrust, gravity)
+    k1 = derivatives(t, state, rocketParameters, stage_ignition_time)
+    k2 = derivatives(t + dt/2, state + dt*k1, rocketParameters, stage_ignition_time)
+    k3 = derivatives(t + dt/2, state + dt*k2, rocketParameters, stage_ignition_time)
+    k4 = derivatives(t + dt, state + dt*k3, rocketParameters, stage_ignition_time)
 
     newState = state + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
 

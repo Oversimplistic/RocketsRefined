@@ -1,7 +1,7 @@
 from infodisplay import output_as_text, xy_graph
 from physics import *
 from storedflightdata import FlightDataSummary, FlightLog, simulationDataLog
-from state import rocketState
+from state import *
 
 #a test loop to run the code
 
@@ -12,6 +12,7 @@ time = 0
 summary = FlightDataSummary()
 flight_log = FlightLog()
 
+stage_ignition_time = 0
 
 while time<1 or rocketState[2]>0:
 
@@ -33,14 +34,21 @@ while time<1 or rocketState[2]>0:
         summary.max_q = q
         summary.max_q_time = time
 
-    if summary.burnout_time is None and get_thrust(time,stage1) <= 1:
+    if summary.burnout_time is None and get_thrust(time,stage1, stage_ignition_time) <= 1:
         summary.burnout_time = time
         summary.burnout_altitude = z
+
+    if (get_thrust(time, stages[current_stage_index], stage_ignition_time)) <= 1 and current_stage_index < len(stages) - 1:
+        print(f"Staging at t={time:.2}s, altitude={z:.2f}m")
+        rocketState[6] -= stages[current_stage_index].dry_mass
+        current_stage_index += 1
+        stage_ignition_time = time
+
 
     theta = get_trajectory(time, vx, vy, vz)
     flight_log.log(time, rocketState, theta)
     #print(rocketState)
-    rocketState = rk4(rocketState, time, (1/frequency), stage1)
+    rocketState = rk4(rocketState, time, (1/frequency), stages[current_stage_index], stage_ignition_time)
 
     time+=(1/frequency)
 

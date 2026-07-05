@@ -45,7 +45,7 @@ This runs the simulation until the rocket returns to the ground, prints a flight
 - [x] Add a prescribed gravity turn for proof of concept
 - [ ] Extend to 3D (lateral tracking)
 - [ ] Add aerodynamic-driven gravity turn logic
-- [ ] Multi-stage support
+- [x] Multi-stage support
 - [ ] Monte Carlo dispersion analysis (wind, thrust variance)
 - [ ] Validation against real flight telemetry
 
