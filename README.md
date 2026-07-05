@@ -14,6 +14,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 - Motor-thrust curve interpolation of real-world data
 - Prescribed gravity turn and downrange modelling/tracking
 - Mass-flow modelling from thrust and specific impulse (Isp)
+- Support for two stages using different rocket motors
 - ISA-based atmospheric density model (drag varies with altitude)
 - Altitude-dependent gravity
 - Flight event tracking (max altitude, max velocity, max dynamic pressure, burnout)
@@ -22,7 +23,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 ## Current Limitations
 
 - Only a two-dimensional ascent profile - no lateral motion yet
-- Single stage only
+- Only supports two stages
 - No wind or dispersion modelling
 - Not yet validated against real flight data
 
