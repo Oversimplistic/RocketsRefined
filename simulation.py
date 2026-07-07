@@ -39,7 +39,7 @@ while time<1 or rocketState[2]>0:
         summary.burnout_altitude = z
 
     if (get_thrust(time, stages[current_stage_index], stage_ignition_time)) <= 1 and current_stage_index < len(stages) - 1:
-        print(f"Staging at t={time:.2}s, altitude={z:.2f}m")
+        print(f"Staging at t={time:.2f}s, altitude={z:.2f}m")
         rocketState[6] -= stages[current_stage_index].dry_mass
         current_stage_index += 1
         stage_ignition_time = time
