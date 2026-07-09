@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
+import numpy as np
 import pytest
 from thrustdata import motors
-from physics import get_thrust, get_gravity, get_drag
+from physics import get_thrust, get_gravity, get_drag, derivatives
 from state import rocketParameters, stage1, stage2
-from state import engine1, engine2
+from state import engine1, engine2, rocketState
 
 
 @pytest.fixture
@@ -49,6 +50,10 @@ def drag_coeff(rocketParameters1):
 def drag_area(rocketParameters1):
     return rocketParameters1.drag_area
 
+@pytest.fixture
+def rocketSt():
+    return rocketState
+
 
 #Thrust Tests
 def test_thrust_pre_ignition(rocketParameters1):
@@ -86,3 +91,14 @@ def test_stationary_drag_at_altitude(drag_coeff, drag_area):
 
 def test_moving_drag(drag_coeff, drag_area):
     assert get_drag(10, 0, drag_coeff, drag_area) > 0
+
+#Derivative Test
+def test_derivative_function(rocketSt, rocketParameters1):
+    result = derivatives(0, rocketSt, rocketParameters1, 0)
+    assert result[0] == 0
+    assert result[1] == 0
+    assert result[2] == 0
+    assert result[3] >= 0
+    assert result[4] >= 0
+    assert result[5] >= 0
+    assert result[6] <= stage1.wet_mass+stage2.wet_mass
