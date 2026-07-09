@@ -43,22 +43,18 @@ This runs the simulation until the rocket returns to the ground, prints a flight
 
 ## Testing
 
-Unit tests are written using `pytest` and live in `unitTests.py`. They currently focus on thrust-curve interpolation logic, covering:
-
-- Pre-ignition thrust lookup
-- Zero thrust at and after burnout, for both stages
-- Correct thrust-curve interpolation for both stages
+Unit tests are written using `pytest` and live in `unittests.py`.
 
 To run the tests:
 
 ```bash
-pytest unitTests.py
+pytest unittests.py
 ```
 
 or, for more detail:
 
 ```bash
-pytest unitTests.py -v
+pytest unittests.py -v
 ```
 
 ## Roadmap
@@ -69,7 +65,6 @@ pytest unitTests.py -v
 - [ ] Add aerodynamic-driven gravity turn logic
 - [x] Multi-stage support
 - [x] Unit testing for physics functions
-- [ ] Full unit testing for physics functions
 - [ ] Monte Carlo dispersion analysis (wind, thrust variance)
 - [ ] Validation against real flight telemetry
 
