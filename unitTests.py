@@ -3,9 +3,10 @@ from dataclasses import dataclass
 import numpy as np
 import pytest
 from thrustdata import motors
-from physics import get_thrust, get_gravity, get_drag, derivatives
+from physics import get_thrust, get_gravity, get_drag, derivatives, rk4
 from state import rocketParameters, stage1, stage2
 from state import engine1, engine2, rocketState
+from simulationconditions import frequency
 
 
 @pytest.fixture
@@ -54,6 +55,10 @@ def drag_area(rocketParameters1):
 def rocketSt():
     return rocketState
 
+@pytest.fixture
+def dt():
+    x = 1/frequency
+    return x
 
 #Thrust Tests
 def test_thrust_pre_ignition(rocketParameters1):
@@ -102,3 +107,9 @@ def test_derivative_function(rocketSt, rocketParameters1):
     assert result[4] >= 0
     assert result[5] >= 0
     assert result[6] <= stage1.wet_mass+stage2.wet_mass
+
+#RK4 Test
+def test_rk4(rocketSt, dt):
+    newState = rk4(rocketSt, 0, dt, stage1, 0)
+    assert not np.allclose(newState, rocketSt)
+    assert newState[5] > rocketSt[5]
