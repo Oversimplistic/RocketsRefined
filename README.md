@@ -4,7 +4,7 @@ A physics-based sounding rocket simulator written in Python, using RK4 numerical
 
 ## Overview
 
-This project simulates a single-stage rocket's vertical flight, using real motor thrust-curve data (Cesaroni 40960O8000-P) and the 1976 ISA standard atmosphere model for air density. State (position, velocity, mass) is integrated forward in real time using 4th-order Runge Kutta.
+This project simulates a two-stage rocket's vertical flight, using real motor thrust-curve data and the 1976 ISA standard atmosphere model for air density. State (position, velocity, mass) is integrated forward in real time using 4th-order Runge Kutta.
 
 Built as a personal project to combine and expand my knowledge of numerical methods, flight mechanics, and general software engineering practice ahead of starting my engineering degree.
 
