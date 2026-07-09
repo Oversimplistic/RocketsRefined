@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import pytest
 from thrustdata import motors
-from physics import get_thrust, get_gravity
+from physics import get_thrust, get_gravity, get_drag
 from state import rocketParameters, stage1, stage2
 from state import engine1, engine2
 
@@ -41,6 +41,14 @@ def stage_2_engine():
 def starting_altitude():
     return 0
 
+@pytest.fixture
+def drag_coeff(rocketParameters1):
+    return rocketParameters1.drag_coefficient
+
+@pytest.fixture
+def drag_area(rocketParameters1):
+    return rocketParameters1.drag_area
+
 
 #Thrust Tests
 def test_thrust_pre_ignition(rocketParameters1):
@@ -68,3 +76,13 @@ def test_gravity_at_launch_in_range(starting_altitude):
 
 def test_gravity_at_infinity():
     assert 0.1 > get_gravity(100000000000000) >=0
+
+#Drag Tests
+def test_stationary_drag(drag_coeff, drag_area):
+    assert get_drag(0, 0, drag_coeff, drag_area) == 0
+
+def test_stationary_drag_at_altitude(drag_coeff, drag_area):
+    assert get_drag(0, 1000, drag_coeff, drag_area) == 0
+
+def test_moving_drag(drag_coeff, drag_area):
+    assert get_drag(10, 0, drag_coeff, drag_area) > 0
