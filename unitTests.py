@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import pytest
 from thrustdata import motors
-from physics import get_thrust
+from physics import get_thrust, get_gravity
 from state import rocketParameters, stage1, stage2
 from state import engine1, engine2
 
@@ -37,6 +37,9 @@ def stage_1_engine():
 def stage_2_engine():
     return engine2
 
+@pytest.fixture
+def starting_altitude():
+    return 0
 
 
 #Thrust Tests
@@ -58,3 +61,10 @@ def test_thrust_matches_discrete_data_stage_2(stage2_ignition_time):
     motor = motors
     time, thrust = motor[engine2].thrustTimes[3], motor[engine2].thrustValues[3]
     assert get_thrust(time+stage2_ignition_time, stage2, stage2_ignition_time) == thrust
+
+#Gravity Tests
+def test_gravity_at_launch_in_range(starting_altitude):
+    assert 10>get_gravity(starting_altitude)>9.7
+
+def test_gravity_at_infinity():
+    assert 0.1 > get_gravity(100000000000000) >=0
