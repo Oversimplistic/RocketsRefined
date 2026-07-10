@@ -7,7 +7,7 @@ motor = motors
 
 
 #Drag Area numbers
-radius = 0.18
+radius = 0.09
 dragArea = math.pi * radius**2
 
 #Motor mass -> Stage mass ratio

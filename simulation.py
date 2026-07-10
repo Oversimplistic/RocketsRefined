@@ -18,7 +18,9 @@ while time<1 or rocketState[2]>0:
 
     x,y,z,vx,vy,vz,m = rocketState
 
-    q = 0.5 * get_air_density(z) * vz**2
+    vxyz = math.sqrt(vx**2+vy**2+vz**2)
+
+    q = 0.5 * get_air_density(z) * vxyz**2
 
     if z > summary.max_altitude:
         summary.max_altitude = z
@@ -34,7 +36,7 @@ while time<1 or rocketState[2]>0:
         summary.max_q = q
         summary.max_q_time = time
 
-    if summary.burnout_time is None and get_thrust(time,stage1, stage_ignition_time) <= 1:
+    if summary.burnout_time is None and get_thrust(time,stages[current_stage_index], stage_ignition_time) <= 1:
         summary.burnout_time = time
         summary.burnout_altitude = z
 

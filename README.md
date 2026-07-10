@@ -61,6 +61,7 @@ pytest unittests.py -v
 
 - [x] Add 2D capability (downrange distance)
 - [x] Add a prescribed gravity turn for proof of concept
+- [ ] Transonic drag, etc.
 - [ ] Extend to 3D (lateral tracking)
 - [ ] Add aerodynamic-driven gravity turn logic
 - [x] Multi-stage support
