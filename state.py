@@ -1,6 +1,8 @@
 import numpy as np
 import math
 from dataclasses import dataclass
+
+from dragcoefficientdatasource import get_drag_coefficient, cd_points
 from thrustdata import motors
 from rocketdesignconfig import configuredEngines, radius, stageStructuralMass
 
@@ -28,7 +30,7 @@ def build_stage(engine_name):
     index = configuredEngines.index(engine_name)
     structuralMass = stageStructuralMass[index]
     return rocketParameters(
-        drag_coefficient=0.6,
+        drag_coefficient=cd_points[0],
         drag_area=dragArea,
         thrust_time_stamps=m.thrustTimes,
         thrust_values=m.thrustValues,

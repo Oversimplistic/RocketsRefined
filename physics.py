@@ -44,6 +44,7 @@ def derivatives(t, state, rocketParameters, stage_ignition_time):
     vxyz = math.sqrt(vx ** 2 + vy ** 2 + vz ** 2)
     thrust = get_thrust(t, rocketParameters, stage_ignition_time)
     gravity = get_gravity(z)
+    rocketParameters.drag_coefficient = get_drag_coefficient(vxyz, z)
     drag = get_drag(vxyz, z, rocketParameters.drag_coefficient, rocketParameters.drag_area)
     simulation_data.log(t, drag, z, vxyz, thrust, gravity)
 

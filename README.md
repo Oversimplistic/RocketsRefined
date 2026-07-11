@@ -24,7 +24,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 
 - Only a two-dimensional ascent profile - no lateral motion yet
 - No wind or dispersion modelling
-- Not yet validated against real flight data
+- Only partially validated against real flight data (no supersonic validation)
 
 ## How to run
 
@@ -60,7 +60,7 @@ pytest unittests.py -v
 
 - [x] Add 2D capability (downrange distance)
 - [x] Add a prescribed gravity turn for proof of concept
-- [ ] Transonic drag, etc.
+- [x] Transonic drag, etc. (Placeholder values)
 - [ ] Extend to 3D (lateral tracking)
 - [ ] Add aerodynamic-driven gravity turn logic
 - [x] Multi-stage support
@@ -75,5 +75,6 @@ pytest unittests.py -v
 - Object Orientated Programming
 - Git integration
 - Unit testing with pytest
+- Variable drag coefficients and angles of attack.
 
 
