@@ -2,6 +2,7 @@ import numpy as np
 import math
 from dataclasses import dataclass
 from thrustdata import motors
+from rocketdesignconfig import engine1, engine2
 
 motor = motors
 
@@ -13,10 +14,6 @@ dragArea = math.pi * radius**2
 #Motor mass -> Stage mass ratio
 massRatio = 1.3
 
-
-#Rocket Design Factors
-engine1 = "Cesaroni 40960O8000-P"
-engine2 = "O5500X-PS"
 
 
 @dataclass
