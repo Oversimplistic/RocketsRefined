@@ -4,28 +4,27 @@ import numpy as np
 import pytest
 from thrustdata import motors
 from physics import get_thrust, get_gravity, get_drag, derivatives, rk4
-from state import rocketParameters, stage1, stage2
-from state import engine1, engine2, rocketState
+from state import stages
+from state import rocketState
 from simulationconditions import frequency
+from rocketdesignconfig import configuredEngines
 
 
 @pytest.fixture
 def rocketParameters1():
-    return stage1
+    return stages[0]
 
 @pytest.fixture
 def rocketParameters2():
-    return stage2
+    return stages[1]
 
 @pytest.fixture
 def stage1_burnout__time():
-    x = len(stage1.thrust_time_stamps)
-    return stage1.thrust_time_stamps[x-1]
+    return stages[0].thrust_time_stamps[-1]
 
 @pytest.fixture
 def stage2_burnout__time(stage1_burnout__time):
-    x = len(stage2.thrust_time_stamps)
-    return (stage2.thrust_time_stamps[x-1]) + stage1_burnout__time
+    return (stages[1].thrust_time_stamps[-1]) + stage1_burnout__time
 
 @pytest.fixture
 def stage2_ignition_time(stage1_burnout__time):
@@ -33,11 +32,11 @@ def stage2_ignition_time(stage1_burnout__time):
 
 @pytest.fixture
 def stage_1_engine():
-    return engine1
+    return configuredEngines[0]
 
 @pytest.fixture
 def stage_2_engine():
-    return engine2
+    return configuredEngines[1]
 
 @pytest.fixture
 def starting_altitude():
@@ -62,23 +61,23 @@ def dt():
 
 #Thrust Tests
 def test_thrust_pre_ignition(rocketParameters1):
-    assert get_thrust(0.0, rocketParameters1, 0) == stage1.thrust_values[0]
+    assert get_thrust(0.0, rocketParameters1, 0) == stages[0].thrust_values[0]
 
 def test_thrust_at_burnout_stage_1(stage1_burnout__time):
-    assert get_thrust(stage1_burnout__time, stage1, 0) == 0
+    assert get_thrust(stage1_burnout__time, stages[0], 0) == 0
 
 def test_thrust_at_burnout_stage_2(stage2_burnout__time, stage2_ignition_time):
-    assert get_thrust(stage2_burnout__time, stage2, stage2_ignition_time) == 0
+    assert get_thrust(stage2_burnout__time, stages[1], stage2_ignition_time) == 0
 
 def test_thrust_matches_discrete_data_stage_1():
     motor = motors
-    time, thrust = motor[engine1].thrustTimes[3], motor[engine1].thrustValues[3]
-    assert get_thrust(time, stage1, 0) == thrust
+    time, thrust = motor[configuredEngines[0]].thrustTimes[3], motor[configuredEngines[0]].thrustValues[3]
+    assert get_thrust(time, stages[0], 0) == thrust
 
 def test_thrust_matches_discrete_data_stage_2(stage2_ignition_time):
     motor = motors
-    time, thrust = motor[engine2].thrustTimes[3], motor[engine2].thrustValues[3]
-    assert get_thrust(time+stage2_ignition_time, stage2, stage2_ignition_time) == thrust
+    time, thrust = motor[configuredEngines[1]].thrustTimes[3], motor[configuredEngines[1]].thrustValues[3]
+    assert get_thrust(time+stage2_ignition_time, stages[1], stage2_ignition_time) == thrust
 
 #Gravity Tests
 def test_gravity_at_launch_in_range(starting_altitude):
@@ -106,10 +105,10 @@ def test_derivative_function(rocketSt, rocketParameters1):
     assert result[3] >= 0
     assert result[4] >= 0
     assert result[5] >= 0
-    assert result[6] <= stage1.wet_mass+stage2.wet_mass
+    assert result[6] <= stages[0].wet_mass+stages[1].wet_mass
 
 #RK4 Test
 def test_rk4(rocketSt, dt):
-    newState = rk4(rocketSt, 0, dt, stage1, 0)
+    newState = rk4(rocketSt, 0, dt, stages[0], 0)
     assert not np.allclose(newState, rocketSt)
     assert newState[5] > rocketSt[5]
