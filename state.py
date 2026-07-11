@@ -2,17 +2,14 @@ import numpy as np
 import math
 from dataclasses import dataclass
 from thrustdata import motors
-from rocketdesignconfig import configuredEngines
+from rocketdesignconfig import configuredEngines, radius, stageStructuralMass
+
 
 motor = motors
 
 
 #Drag Area numbers
-radius = 0.09
 dragArea = math.pi * radius**2
-
-#Motor mass -> Stage mass ratio
-massRatio = 1.3
 
 
 
@@ -28,14 +25,16 @@ class rocketParameters:
 
 def build_stage(engine_name):
     m = motor[engine_name]
+    index = configuredEngines.index(engine_name)
+    structuralMass = stageStructuralMass[index]
     return rocketParameters(
-        drag_coefficient=0.25,
+        drag_coefficient=0.6,
         drag_area=dragArea,
         thrust_time_stamps=m.thrustTimes,
         thrust_values=m.thrustValues,
         isp=m.ISP,
-        dry_mass=m.dryMass*massRatio,
-        wet_mass=m.wetMass*massRatio
+        dry_mass=m.dryMass + structuralMass,
+        wet_mass=m.wetMass + structuralMass,
     )
 
 stages = [build_stage(name) for name in configuredEngines]
