@@ -2,10 +2,10 @@ from infodisplay import output_as_text, xy_graph
 from physics import *
 from storedflightdata import FlightDataSummary, FlightLog, simulationDataLog
 from state import *
-from rocketdesignconfig import engine1, engine2
 
 #a test loop to run the code
-def simulation(output_as_text, xy_graph, rocketState, current_stage_index, simulation_data, engine1, engine2):
+def simulation(output_as_text, xy_graph, rocketState, current_stage_index, simulation_data):
+
     #simulation time, increases by 1/frequency per tick
     time = 0
 

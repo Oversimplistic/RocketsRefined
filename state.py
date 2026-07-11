@@ -2,7 +2,7 @@ import numpy as np
 import math
 from dataclasses import dataclass
 from thrustdata import motors
-from rocketdesignconfig import engine1, engine2
+from rocketdesignconfig import configuredEngines
 
 motor = motors
 
@@ -26,27 +26,19 @@ class rocketParameters:
     dry_mass: float
     wet_mass: float
 
-stage1 = rocketParameters(
-    drag_coefficient=0.25,
-    drag_area=dragArea,
-    thrust_time_stamps=motor[engine1].thrustTimes,
-    thrust_values=motor[engine1].thrustValues,
-    isp=motor[engine1].ISP,
-    dry_mass=motor[engine1].dryMass*massRatio,
-    wet_mass=motor[engine1].wetMass*massRatio
-)
+def build_stage(engine_name):
+    m = motor[engine_name]
+    return rocketParameters(
+        drag_coefficient=0.25,
+        drag_area=dragArea,
+        thrust_time_stamps=m.thrustTimes,
+        thrust_values=m.thrustValues,
+        isp=m.ISP,
+        dry_mass=m.dryMass*massRatio,
+        wet_mass=m.wetMass*massRatio
+    )
 
-stage2 = rocketParameters(
-    drag_coefficient=0.25,
-    drag_area=dragArea,
-    thrust_time_stamps=motor[engine2].thrustTimes,
-    thrust_values=motor[engine2].thrustValues,
-    isp=motor[engine2].ISP,
-    dry_mass=motor[engine2].dryMass*massRatio,
-    wet_mass=motor[engine2].wetMass*massRatio
-)
-
-stages = [stage1, stage2]
+stages = [build_stage(name) for name in configuredEngines]
 current_stage_index = 0
 
 #x, y, z,
@@ -54,4 +46,4 @@ current_stage_index = 0
 #mass, theta
 rocketState = np.array([0.0, 0.0, 0.0,
                0.0, 0.0, 0.0,
-               stage1.wet_mass+stage2.wet_mass])
+               sum(s.wet_mass for s in stages)])

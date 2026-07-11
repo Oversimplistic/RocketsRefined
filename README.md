@@ -4,7 +4,7 @@ A physics-based sounding rocket simulator written in Python, using RK4 numerical
 
 ## Overview
 
-This project simulates a two-stage rocket's vertical flight, using real motor thrust-curve data and the 1976 ISA standard atmosphere model for air density. State (position, velocity, mass) is integrated forward in real time using 4th-order Runge Kutta.
+This project simulates an n-stage rocket's 2D flight, using real motor thrust-curve data and the 1976 ISA standard atmosphere model for air density. State (position, velocity, mass) is integrated forward in real time using 4th-order Runge Kutta.
 
 Built as a personal project to combine and expand my knowledge of numerical methods, flight mechanics, and general software engineering practice ahead of starting my engineering degree.
 
@@ -14,7 +14,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 - Motor-thrust curve interpolation of real-world data
 - Prescribed gravity turn and downrange modelling/tracking
 - Mass-flow modelling from thrust and specific impulse (Isp)
-- Support for two stages using different rocket motors
+- Support for n stages using different rocket motors
 - ISA-based atmospheric density model (drag varies with altitude)
 - Altitude-dependent gravity
 - Flight event tracking (max altitude, max velocity, max dynamic pressure, burnout)
@@ -23,7 +23,6 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 ## Current Limitations
 
 - Only a two-dimensional ascent profile - no lateral motion yet
-- Only supports two stages
 - No wind or dispersion modelling
 - Not yet validated against real flight data
 
