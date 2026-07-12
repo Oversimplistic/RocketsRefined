@@ -25,9 +25,8 @@ class rocketParameters:
     dry_mass: float
     wet_mass: float
 
-def build_stage(engine_name):
+def build_stage(index, engine_name):
     m = motor[engine_name]
-    index = configuredEngines.index(engine_name)
     structuralMass = stageStructuralMass[index]
     return rocketParameters(
         drag_coefficient=cd_points[0],
@@ -39,7 +38,7 @@ def build_stage(engine_name):
         wet_mass=m.wetMass + structuralMass,
     )
 
-stages = [build_stage(name) for name in configuredEngines]
+stages = [build_stage(i, name) for i, name in enumerate(configuredEngines)]
 current_stage_index = 0
 
 #x, y, z,

@@ -1,8 +1,8 @@
 from state import *
-from simulation.simulationconditions import standardGravity, frequency
+from simulation.simulationconditions import standardGravity
 from atmosphere import *
 from storedflightdata import simulationDataLog
-from trajectoryprofile import get_trajectory
+from configs.trajectoryprofile import get_trajectory
 from dragcoefficientdatasource import get_drag_coefficient
 
 simulation_data = simulationDataLog()

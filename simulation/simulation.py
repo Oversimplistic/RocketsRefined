@@ -1,19 +1,21 @@
 from infodisplay import *
 from physics.physics import *
+from simulation.simulationconditions import frequency
 from storedflightdata import FlightDataSummary, FlightLog
 from state import *
+from configs.trajectoryprofile import coastPeriodDuration
 
 #a test loop to run the code
 def simulation(output_as_text, xy_graph, rocketState, current_stage_index, simulation_data):
 
     #simulation time, increases by 1/frequency per tick
     time = 0
-
-
     summary = FlightDataSummary()
     flight_log = FlightLog()
 
     stage_ignition_time = 0
+    burnout_time_current_stage = None
+    awaiting_separtion = False
 
     while time<1 or rocketState[2]>0:
 
@@ -27,8 +29,7 @@ def simulation(output_as_text, xy_graph, rocketState, current_stage_index, simul
             summary.max_altitude = z
             summary.max_altitude_time = time
 
-        velocity = abs(math.sqrt((vx**2)+(vy**2)+(vz**2)))
-
+        velocity = abs(vxyz)
         if velocity > summary.max_velocity:
             summary.max_velocity = velocity
             summary.max_velocity_time = time
@@ -37,16 +38,24 @@ def simulation(output_as_text, xy_graph, rocketState, current_stage_index, simul
             summary.max_q = q
             summary.max_q_time = time
 
-        if summary.burnout_time is None and get_thrust(time,stages[current_stage_index], stage_ignition_time) <= 1:
-            summary.burnout_time = time
-            summary.burnout_altitude = z
+        current_thrust = get_thrust(time,stages[current_stage_index], stage_ignition_time)
 
-        if (get_thrust(time, stages[current_stage_index], stage_ignition_time)) <= 1 and current_stage_index < len(stages) - 1:
+        if not awaiting_separtion and current_thrust <= 1 and burnout_time_current_stage is None:
+            burnout_time_current_stage = time
+            if summary.burnout_time is None:
+                summary.burnout_time = time
+                summary.burnout_altitude = z
+            if current_stage_index < len(stages)-1:
+                awaiting_separtion = True
+                print(f"Burnout of stage {current_stage_index+1} at t={time:.2f}s, altitude={z:.2f}m, coasting {coastPeriodDuration[current_stage_index]}s before separation")
+
+        if awaiting_separtion and (time-burnout_time_current_stage) >= coastPeriodDuration[current_stage_index]:
             print(f"Staging at t={time:.2f}s, altitude={z:.2f}m")
             rocketState[6] -= stages[current_stage_index].dry_mass
             current_stage_index += 1
             stage_ignition_time = time
-
+            burnout_time_current_stage = None
+            awaiting_separtion = False
 
         theta = get_trajectory(time, vx, vy, vz)
         flight_log.log(time, rocketState, theta)

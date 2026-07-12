@@ -15,7 +15,7 @@ profile = trajectory(
     pitchOverAngle = 0.02
 )
 
-
+coastPeriodDuration = [20,0]
 
 
 def get_trajectory(t, vx, vy, vz):

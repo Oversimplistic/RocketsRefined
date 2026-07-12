@@ -1,10 +1,11 @@
 
 
 #The engines used for this flight, in stage order
-configuredEngines = ["Estes C6"]
-stageStructuralMass = [0.034]
+configuredEngines = ["Cesaroni 40960O8000-P", "Cesaroni 40960O8000-P"]
+stageStructuralMass = [15, 25]
+
 
 #Rocket Radius
-radius = 0.0125
+radius = 0.161
 
 

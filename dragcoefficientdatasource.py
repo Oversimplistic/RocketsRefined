@@ -10,14 +10,14 @@ mach_points = np.array([
 ])
 
 cd_points = np.array([
-    0.35,0.34,0.33,0.33,0.34,0.37,0.41,
-    0.47,0.58,0.72,0.78,0.76,0.68,0.58,
-    0.52,0.46,0.42,0.40
+    0.28, 0.28, 0.27, 0.27, 0.28, 0.30, 0.34,
+    0.40, 0.48, 0.55, 0.58, 0.55, 0.48, 0.40,
+    0.36, 0.32, 0.30, 0.29
 ])
 
 #Gets mach number from velocity and altitude (used to calculate local speed of sound)
 def get_mach(velocity,z):
-    T = get_atmospheric_temperature(z)
+    T = get_atmospheric_temperature(z)+273.15
     a = np.sqrt(1.4*287.05*T)
     M = velocity/a
     return M
