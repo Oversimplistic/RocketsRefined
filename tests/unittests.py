@@ -1,13 +1,11 @@
-from dataclasses import dataclass
-
 import numpy as np
 import pytest
 from thrustdata import motors
 from physics import get_thrust, get_gravity, get_drag, derivatives, rk4
 from state import stages
 from state import rocketState
-from simulationconditions import frequency
-from rocketdesignconfig import configuredEngines
+from simulation.simulationconditions import frequency
+from configs.rocketdesignconfig import configuredEngines
 
 
 @pytest.fixture

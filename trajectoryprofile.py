@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from state import rocketState
 import math
 
 @dataclass

@@ -15,6 +15,7 @@ cd_points = np.array([
     0.52,0.46,0.42,0.40
 ])
 
+#Gets mach number from velocity and altitude (used to calculate local speed of sound)
 def get_mach(velocity,z):
     T = get_atmospheric_temperature(z)
     a = np.sqrt(1.4*287.05*T)
@@ -25,6 +26,7 @@ def get_mach(velocity,z):
 def get_angle_of_attack():
     return 0
 
+#Interpolates an approximate drag coefficient from a value table
 def get_drag_coefficient(velocity, altitude):
     M = get_mach(velocity, altitude)
     return np.interp(M, mach_points, cd_points) + 3*(get_angle_of_attack()**2)

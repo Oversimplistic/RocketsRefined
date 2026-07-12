@@ -2,9 +2,9 @@ import numpy as np
 import math
 from dataclasses import dataclass
 
-from dragcoefficientdatasource import get_drag_coefficient, cd_points
+from dragcoefficientdatasource import cd_points
 from thrustdata import motors
-from rocketdesignconfig import configuredEngines, radius, stageStructuralMass
+from configs.rocketdesignconfig import configuredEngines, radius, stageStructuralMass
 
 
 motor = motors
