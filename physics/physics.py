@@ -79,8 +79,8 @@ def rk4(rocketState, t, dt, rocketParameters, stage_ignition_time):
     state = rocketState
 
     k1 = derivatives(t, state, rocketParameters, stage_ignition_time)
-    k2 = derivatives(t + dt/2, state + dt*k1, rocketParameters, stage_ignition_time)
-    k3 = derivatives(t + dt/2, state + dt*k2, rocketParameters, stage_ignition_time)
+    k2 = derivatives(t + dt/2, state + (dt/2)*k1, rocketParameters, stage_ignition_time)
+    k3 = derivatives(t + dt/2, state + (dt/2)*k2, rocketParameters, stage_ignition_time)
     k4 = derivatives(t + dt, state + dt*k3, rocketParameters, stage_ignition_time)
 
     newState = state + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
