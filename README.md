@@ -24,7 +24,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 
 - Only a two-dimensional ascent profile - no lateral motion yet
 - No wind or dispersion modelling
-- Only partially validated against real flight data (no supersonic validation)
+- Only partially validated against real flight data (only subsonic validation)
 
 ## How to run
 
@@ -66,7 +66,8 @@ pytest unittests.py -v
 - [x] Multi-stage support
 - [x] Unit testing for physics functions
 - [ ] Monte Carlo dispersion analysis (wind, thrust variance)
-- [ ] Validation against real flight telemetry
+- [x] Validation against real subsonic fight telemetry
+- [ ] Validation against real supersonic flight telemetry
 
 ## Key Learnings
 
