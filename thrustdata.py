@@ -5,6 +5,9 @@ from dataclasses import dataclass, field
 @dataclass
 
 class rocketMotor:
+    """
+    Defines the details needed for a rocket engine to be used in this simulation.
+    """
     ISP: float
     diameter: float #in m
     wetMass: float #in kg

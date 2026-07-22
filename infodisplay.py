@@ -3,6 +3,14 @@ import matplotlib.pyplot as plt
 
 
 def output_as_text(summary):
+    """
+    Outputs a summary of telemetry events
+
+    Args:
+        summary: telemetry summary
+    Returns:
+        None
+    """
     print(f"Max Altitude was {summary.max_altitude:.2f} meters. This was reached at {summary.max_altitude_time:.2f} seconds\n"
           f"Max Velocity was {summary.max_velocity:.2f} meters per second. This was reached at {summary.max_velocity_time:.2f} seconds\n"
           f"MaxQ was {summary.max_q:.2f} Pa. This was reached at {summary.max_q_time:.2f} seconds\n"
@@ -10,11 +18,14 @@ def output_as_text(summary):
           )
 
 
-#An explicit matplotlib configuration for 3x1 graphing, this can be adjusted to any aspect ratio by adding new graphs
 def xy_graph(xlist1, ylist1, xtitle1, ytitle1, graphtitle1,
              xlist2, ylist2, xtitle2, ytitle2, graphtitle2,
              xlist3, ylist3, xtitle3, ytitle3, graphtitle3,
              xlist4, ylist4, xtitle4, ytitle4, graphtitle4):
+    """
+    Generates a 2x2 table of flight data
+
+    """
 
     #establishes subplots
     fig, axs = plt.subplots(2, 2)

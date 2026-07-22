@@ -1,7 +1,15 @@
 import math
 
-#Modeled using the ISA Standard Atmosphere 1976
+
 def get_atmospheric_temperature(h):
+    """
+    Uses the ISA Standard Atmosphere 1976 to calculate the atmospheric temperature
+    Args:
+        h (float): altitude above sea level in metres
+
+    Returns:
+        T (float): atmospheric temperature in Kelvin
+    """
     if h<=11019: T = 15 - 6.5*(h/1000)
     elif 11019<h<=20063: T = -56.5
     elif 20063<h<=32162: T = -56.5 + 1*(h/1000)
@@ -12,8 +20,14 @@ def get_atmospheric_temperature(h):
     else: T = -92.5
     return T
 
-#Modeled using the Earth Atmosphere Model from the Glenn Research Centre
 def get_atmospheric_pressure(h):
+    """
+    Uses the Earth Atmosphere Model from the Glenn Research Centre to calculate the atmospheric pressure in Pa
+    Args:
+        h (float): altitude above sea level in metres
+    Returns:
+        pressure (float): atmospheric pressure in Pa
+    """
     T = get_atmospheric_temperature(h)
     if h>25000:
         pressure = 2.488 * ((T+273.1)/216.6)**-11.388
@@ -27,8 +41,18 @@ def get_atmospheric_pressure(h):
     else:
         print("Temperature calculation error")
 
-#Also from the Glenn Research Centre
+
 def get_air_density(h):
+    """
+    Calculates the air density in kg/m^3
+    Also from the Glenn Research Centre
+
+    Args:
+        h (float): altitude above sea level in metres
+
+    Returns:
+        density (float): air density in kg/m^3
+    """
     p = get_atmospheric_pressure(h)
     T = get_atmospheric_temperature(h)
     density = p / (0.2869 * (T+273.1))

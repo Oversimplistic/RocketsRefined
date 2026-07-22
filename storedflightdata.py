@@ -2,6 +2,9 @@ from dataclasses import dataclass, field
 
 @dataclass
 class FlightDataSummary:
+    """
+    Defines which flight telemetry is stored as major events
+    """
     max_altitude: float=0.0
     max_altitude_time: float=0.0
 
@@ -17,6 +20,9 @@ class FlightDataSummary:
 
 @dataclass
 class FlightLog:
+    """
+    Defines the full suite of telemetry data stored in this simulation regarding rocket state
+    """
     time:list=field(default_factory=list)
     x: list = field(default_factory=list)
     y: list = field(default_factory=list)
@@ -36,6 +42,9 @@ class FlightLog:
 
 @dataclass
 class simulationDataLog:
+    """
+    Defines and stores the full suite of telemetry data used for integration
+    """
     time:list=field(default_factory=list)
     drag:list=field(default_factory=list)
     altitude:list=field(default_factory=list)

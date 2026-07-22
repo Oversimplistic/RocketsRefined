@@ -29,7 +29,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 ## How to run
 
 ```bash
-python simulation.py
+python main.py
 ```
 This runs the simulation until the rocket returns to the ground, prints a flight summary, and graphs key data.
 

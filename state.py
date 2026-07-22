@@ -17,6 +17,9 @@ dragArea = math.pi * radius**2
 
 @dataclass
 class rocketParameters:
+    """
+    Defines the parameters of the rocket
+    """
     drag_coefficient : float
     drag_area: float
     thrust_time_stamps: list
@@ -26,6 +29,9 @@ class rocketParameters:
     wet_mass: float
 
 def build_stage(index, engine_name):
+    """
+    Converts parameters to stage details using the rocketParametes class
+    """
     m = motor[engine_name]
     structuralMass = stageStructuralMass[index]
     return rocketParameters(
@@ -38,6 +44,7 @@ def build_stage(index, engine_name):
         wet_mass=m.wetMass + structuralMass,
     )
 
+#Generates the stage information
 stages = [build_stage(i, name) for i, name in enumerate(configuredEngines)]
 current_stage_index = 0
 
