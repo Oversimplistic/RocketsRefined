@@ -38,7 +38,7 @@ Built as a personal project to combine and expand my knowledge of numerical meth
 
 - Only a two-dimensional ascent profile - no lateral motion yet
 - No wind or dispersion modelling
-- Only partially validated against real flight data (exclusively supersonic validation)
+- Only partially validated against real flight data (exclusively subsonic validation)
 
 ## How to run
 
