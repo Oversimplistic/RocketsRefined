@@ -1,3 +1,4 @@
+[![Tests](https://github.com/Oversimplistic/RocketsRefined/actions/workflows/tests.yml/badge.svg)](https://github.com/Oversimplistic/RocketsRefined/actions/workflows/tests.yml)
 # Rockets Refined - A Trajectory Simulator for Sounding Rockets
 
 A physics-based sounding rocket simulator written in Python, using RK4 numerical integration to model powered ascent under thrust, drag, gravity, and a standard atmosphere model.
